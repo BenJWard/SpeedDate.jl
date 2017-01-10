@@ -4,8 +4,8 @@ using ArgParse
 using Bio: Seq, Var, Phylo.Dating, Indexers
 using DataFrames
 
-include("dating.jl")
-include("visualize.jl")
+include("datng/dating.jl")
+include("plotting/visualize.jl")
 
 function parse_command_line()
     s = ArgParseSettings()
@@ -17,6 +17,9 @@ function parse_command_line()
             action = :command
         "interactive"
             help = "Start the interactive GUI for SpeedDate."
+            action = :command
+        "plot"
+            help = "Produce quick plots from SpeedDate results files."
             action = :command
     end
 
@@ -66,6 +69,27 @@ function parse_command_line()
             action = :store_true
     end
 
+    @add_arg_table s["plot"] begin
+        "--plottype", "-p"
+            help = "The type of plot to produce, currently only heaplots are supported."
+            arg_type = String
+            default = "heat"
+            range_tester = allowed_plot_type
+        "--outfile", "-o"
+            help = """
+            The name to give to the output plot file, adding .png or .pdf etc to
+            the end of the filename makes SpeedDate save the plot in that format.
+            """
+            default = "SDplot.png"
+        "--backend", "-b"
+            help = "Select the backend used to produce the plots."
+            default = "pyplot"
+            range_tester = allowed_backend
+        "--scan", "-s"
+            help = "Use this flag if you are plotting a window scan file."
+            action = :store_true
+    end
+
     return parse_args(s)
 end
 
@@ -78,6 +102,9 @@ function main()
         if arguments["%COMMAND%"] == "interactive"
             include("gtk_gui.jl")
             start_interactive_app()
+        end
+        if arguments["%COMMAND%"] == "plot"
+            visualize(arguments["plot"])
         end
     #catch err
         #(STDOUT, "SpeedDate could not complete analysis.\nReason:\n$(err.msg)\n")
