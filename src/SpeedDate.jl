@@ -85,8 +85,8 @@ function parse_command_line()
             help = "Select the backend used to produce the plots."
             default = "pyplot"
             range_tester = allowed_backend
-        "inputfile"
-            help = "The file name of the input data."
+        "inputfiles"
+            help = "The file names of the input data."
             arg_type = String
             nargs = '+'
     end
