@@ -4,7 +4,7 @@ using ArgParse
 using Bio: Seq, Var, Phylo.Dating, Indexers
 using DataFrames
 
-include("datng/dating.jl")
+include("dating/dating.jl")
 include("plotting/visualize.jl")
 
 function parse_command_line()
@@ -88,6 +88,10 @@ function parse_command_line()
         "--scan", "-s"
             help = "Use this flag if you are plotting a window scan file."
             action = :store_true
+        "inputfile"
+            help = "The file name of the input data."
+            arg_type = String
+            nargs = '+'
     end
 
     return parse_args(s)
