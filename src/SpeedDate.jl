@@ -85,9 +85,6 @@ function parse_command_line()
             help = "Select the backend used to produce the plots."
             default = "pyplot"
             range_tester = allowed_backend
-        "--scan", "-s"
-            help = "Use this flag if you are plotting a window scan file."
-            action = :store_true
         "inputfile"
             help = "The file name of the input data."
             arg_type = String

@@ -29,14 +29,9 @@ end
 
 function visualize(args)
 
-    show(args)
+    dfs = collect(readtable(fname, sep = ',', header = false) for fname in args["inputfiles"])
 
-    return 0
-
-    df = readtable(args["inputfile"], sep = ',', header = false)
-    nrows, ncols = size(df)
-
-    fileType = !args["scan"]
+    show(dfs)
 
     if !args["scan"]
         if ncols == 5
