@@ -89,6 +89,9 @@ function parse_command_line()
             help = "The file names of the input data."
             arg_type = String
             nargs = '+'
+        "--scan", "-s"
+            help = "Use this flag if you are plotting a window scan file."
+            action = :store_true
     end
 
     return parse_args(s)

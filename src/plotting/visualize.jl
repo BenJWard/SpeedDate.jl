@@ -27,23 +27,22 @@ end
 
 #using Plots; gr(); sticks(linspace(0.25π,1.5π,5), rand(5), proj=:polar, yerr=.1)
 
+
+"""
+Reads the contents of a SpeedDate results file. Whether the file is of distances
+or dates does not matter.
+"""
+function read_results(filename::String)
+    # First we need to decide if we are reading in a vector or a matrix file.
+
+    f =
+
+end
+
+
+
+
+
 function visualize(args)
-
-    @assert length(args["inputfiles"]) == 1 || length(args["inputfiles"]) == 3
-
-    dfs = collect(readtable(fname, separator = ',', header = false) for fname in args["inputfiles"])
-
-    show(dfs)
-
-    if !args["scan"]
-        if ncols == 5
-            # Data frame contains dates
-        elseif ncols == 3
-            # Data frame contains distances
-        else
-            error("Can't deduce type of data file.")
-        end
-    end
-
 
 end
