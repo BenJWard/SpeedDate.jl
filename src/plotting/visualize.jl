@@ -31,7 +31,7 @@ function visualize(args)
 
     @assert length(args["inputfiles"]) == 1 || length(args["inputfiles"]) == 3
 
-    dfs = collect(readtable(fname, sep = ',', header = false) for fname in args["inputfiles"])
+    dfs = collect(readtable(fname, separator = ',', header = false) for fname in args["inputfiles"])
 
     show(dfs)
 
