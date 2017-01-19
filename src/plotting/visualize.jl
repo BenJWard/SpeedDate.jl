@@ -29,9 +29,13 @@ end
 
 function visualize(args)
 
-    df = readtable(args["inputfile"], separator = ',', header = true)
+    df = readtable(args["inputfile"],
+                   separator = ',',
+                   header = true)
+                   #eltypes = [, Float64])
 
     show(df)
+    show(typeof(df[:FirstSeq]))
 
     exit()
 
