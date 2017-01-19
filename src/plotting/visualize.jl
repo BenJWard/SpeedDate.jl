@@ -31,9 +31,11 @@ function visualize(args)
 
     @assert length(args["inputfiles"]) == 1 || length(args["inputfiles"]) == 3
 
-    dfs = collect(readtable(fname, separator = ',', header = false) for fname in args["inputfiles"])
+    df = readtable(fname, separator = ',', header = true)
 
     show(dfs)
+
+    exit()
 
     if !args["scan"]
         if ncols == 5
