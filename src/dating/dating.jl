@@ -129,6 +129,10 @@ function compute(args)
 
     println("Computing evolutionary distances.")
     if args["scan"]
+        #if args["step"] <= 0
+        #    args["step"] = args["width"]
+        #end
+        dists, vars, windows = distance(model, sequences, args["width"], args["step"])
         slen = args["width"]
         dists, vars, windows = distance(model, sequences, slen, slen)
         table = maketable(names1, names2, windows, dists, args["sepcol"])
