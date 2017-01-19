@@ -31,7 +31,7 @@ function visualize(args)
 
     df = readtable(args["inputfile"], separator = ',', header = true)
 
-    show(dfs)
+    show(df)
 
     exit()
 
