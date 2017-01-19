@@ -88,9 +88,8 @@ function parse_command_line()
             default = "pyplot"
             range_tester = allowed_backend
         "inputfiles"
-            help = "The file names of the input data."
+            help = "The file name of the input data."
             arg_type = String
-            nargs = '+'
     end
 
     return parse_args(s)
