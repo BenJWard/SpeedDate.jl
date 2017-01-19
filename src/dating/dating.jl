@@ -132,7 +132,8 @@ function compute(args)
         #if args["step"] <= 0
         #    args["step"] = args["width"]
         #end
-        dists, vars, windows = distance(model, sequences, args["width"], args["step"])
+        #dists, vars, windows = distance(model, sequences, args["width"], args["step"])
+        dists, vars, windows = distance(model, sequences, args["width"], args["width"])
         slen = args["width"]
         dists, vars, windows = distance(model, sequences, slen, slen)
         table = maketable(names1, names2, windows, dists, args["sepcol"])
