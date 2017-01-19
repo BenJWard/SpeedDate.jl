@@ -31,7 +31,7 @@ function visualize(args)
 
     df = readtable(args["inputfile"],
                    separator = ',',
-                   header = true)
+                   header = true,
                    eltypes = [PooledDataVector{String,UInt8},
                               PooledDataVector{String,UInt8},
                               Vector{Float64}])
