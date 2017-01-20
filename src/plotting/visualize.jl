@@ -7,6 +7,11 @@ function allowed_backend(arg::String)
     return arg == "pyplot"
 end
 
+function is_windowed_data(df::DataFrame)
+    ns = names(df)
+    return (:Window ∈ ns) || ((:WindowFirst ∈ ns) && (:WindowLast ∈ ns))
+end
+
 function prepare_dictionary(names::Vector{Symbol})
     d = Dict{Symbol, Vector{Float64}}()
     for name in names
@@ -34,7 +39,7 @@ function visualize(args)
                    header = true)
     pool!(df, [:FirstSeq, :SecondSeq])
     show(df)
-    show(typeof(df[:FirstSeq]))
+    show(is_windowed_data(df))
 
     exit()
 
