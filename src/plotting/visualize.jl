@@ -31,8 +31,7 @@ function visualize(args)
 
     df = readtable(args["inputfile"],
                    separator = ',',
-                   header = true,
-                   eltypes = [String, String, Float64])
+                   header = true)
     pool!(df, [:FirstSeq, :SecondSeq])
     show(df)
     show(typeof(df[:FirstSeq]))
