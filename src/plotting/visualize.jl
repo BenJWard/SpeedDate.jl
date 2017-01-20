@@ -7,10 +7,9 @@ function allowed_backend(arg::String)
     return arg == "pyplot"
 end
 
-function is_windowed_data!(df::DataFrame)
+function is_windowed_data(df::DataFrame)
     ns = names(df)
-    if 
-    return (:Window ∈ ns) || ((:WindowFirst ∈ ns) && (:WindowLast ∈ ns))
+    return (:WindowFirst ∈ ns) && (:WindowLast ∈ ns)
 end
 
 function prepare_dictionary(names::Vector{Symbol})
