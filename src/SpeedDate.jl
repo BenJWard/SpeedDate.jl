@@ -64,9 +64,6 @@ function parse_command_line()
             help = "Width of the window across sequences."
             arg_type = Int64
             default = 100
-        "--sepcol", "-c"
-            help = "Write the start and end points of windows in separate columns of output table."
-            action = :store_true
         "--onlydist"
             action = :store_true
     end
