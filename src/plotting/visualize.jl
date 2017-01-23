@@ -12,6 +12,11 @@ function is_windowed_data(df::DataFrame)
     return (:WindowFirst ∈ ns) && (:WindowLast ∈ ns)
 end
 
+function is_distance_data(df::DataFrame)
+    ns = names(df)
+    return :Value ∈ ns
+end
+
 function prepare_dictionary(names::Vector{Symbol})
     d = Dict{Symbol, Vector{Float64}}()
     for name in names
@@ -40,6 +45,7 @@ function visualize(args)
     pool!(df, [:FirstSeq, :SecondSeq])
     show(df)
     show(is_windowed_data(df))
+    show(is_distance_data(df))
 
     exit()
 
