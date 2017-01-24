@@ -64,8 +64,25 @@ function clock_collect(names::Vector{Symbol}, dates::Matrix{Float64})
     return d
 end
 
+function filter_by_ref(df::DataFrame, seqname::String)
+    return @from i in df begin
+        @where i.FirstSeq == seqname || i.SecondSeq == seqname
+        @select i
+        @collect DataFrame
+    end
+end
+
 function heatplot(df::DataFrame, col::Symbol)
     return plot(df, x = :FirstSeq, y = :SecondSeq, color = col, Geom.rectbin)
+end
+
+function heatplot(df::DataFrame, col::Symbol, ref::String)
+    show(df)
+    if ref == "default"
+        ref = df[:FirstSeq][1]
+    end
+    filtered = filter_by_ref(df, ref)
+    show(filtered)
 end
 
 #using Plots; gr(); sticks(linspace(0.25π,1.5π,5), rand(5), proj=:polar, yerr=.1)
@@ -81,7 +98,7 @@ function visualize(args)
         # Data frame contains distances.
         if is_windowed_data(df)
             # Data is computed across a sliding window.
-
+            p = heatplot(df, :Value, args["reference"])
         else
             p = heatplot(df, :Value)
         end
@@ -89,7 +106,7 @@ function visualize(args)
         # Data frame contains dates
         if is_windowed_data(df)
             # Data is computed across a sliding window.
-
+            p = heatplot(df, :MidEstimate, args["reference"])
         else
             p = heatplot(df, :MidEstimate)
         end

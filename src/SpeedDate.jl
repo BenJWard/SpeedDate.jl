@@ -2,10 +2,8 @@ __precompile__()
 
 module SpeedDate
 
-using ArgParse
 using Bio: Seq, Var, Phylo.Dating, Indexers
-using DataFrames
-using Gadfly
+using ArgParse, DataFrames, Gadfly, Query
 
 include("dating/dating.jl")
 include("plotting/visualize.jl")
@@ -87,7 +85,7 @@ function parse_command_line()
             arg_type = String
             default = "cm"
             range_tester = allowed_units
-        "--backend", "-b"
+        "--backend"
             help = """
             The backend used to produce the plot.
 
@@ -96,6 +94,19 @@ function parse_command_line()
             arg_type = String
             default = "svg"
             range_tester = allowed_backend
+        "--bins"
+            help = """
+            The number of bins to use when plotting a windowed analysis.
+            """
+            arg_type = Int64
+            default = 500
+        "--reference"
+            help = """
+            The name of the DNA sequence to use as a reference when plotting
+            a windowed analysis.
+            """
+            arg_type = String
+            default = "default"
         "inputfile"
             help = "The file name of the input data."
             arg_type = String
