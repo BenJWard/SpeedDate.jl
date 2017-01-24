@@ -5,6 +5,7 @@ module SpeedDate
 using ArgParse
 using Bio: Seq, Var, Phylo.Dating, Indexers
 using DataFrames
+using Gadfly
 
 include("dating/dating.jl")
 include("plotting/visualize.jl")
@@ -69,23 +70,52 @@ function parse_command_line()
     end
 
     @add_arg_table s["plot"] begin
-        "--plottype", "-p"
-            help = "The type of plot to produce, currently only heaplots are supported."
-            arg_type = String
-            default = "heat"
-            range_tester = allowed_plot_type
-        "--outfile", "-o"
+        #"--plottype", "-p"
+        #    help = "The type of plot to produce, currently only heaplots are supported."
+        #    arg_type = String
+        #    default = "heat"
+        #    range_tester = allowed_plot_type
+        #"--outfile", "-o"
+        #    help = """
+        #    The name to give to the output plot file, adding .png or .pdf etc to
+        #    the end of the filename makes SpeedDate save the plot in that format.
+        #    """
+        #    default = "SDplot.png"
+        #"--backend", "-b"
+        #    help = "Select the backend used to produce the plots."
+        #    default = "pyplot"
+        #    range_tester = allowed_backend
+        "--width", "-w"
+            help = "Width of the plot."
+            arg_type = Float64
+            default = 12.0
+        "--height", "-h"
+            help = "Height of the plot."
+            arg_type = Float64
+            default = 8.0
+        "--units", "-u"
             help = """
-            The name to give to the output plot file, adding .png or .pdf etc to
-            the end of the filename makes SpeedDate save the plot in that format.
+            Units for width and height of the plot.
+
+            Must be one of 'inch', 'mm', or 'cm'.
             """
-            default = "SDplot.png"
+            arg_type = String
+            default = "cm"
+            range_tester = allowed_units
         "--backend", "-b"
-            help = "Select the backend used to produce the plots."
-            default = "pyplot"
+            help = """
+            The backend used to produce the plot.
+
+            Must be one of 'svg', 'svgjs', 'png', 'pdf', 'ps', or 'pgf'.
+            """
+            arg_type = String
+            default = "svg"
             range_tester = allowed_backend
         "inputfile"
             help = "The file name of the input data."
+            arg_type = String
+        "outputfile"
+            help = "The file name of the output plot."
             arg_type = String
     end
 

@@ -79,7 +79,7 @@ function maketable(names1::Vector{Symbol}, names2::Vector{Symbol}, values::Vecto
     midest = collect(Dating.middle(x) for x in values)
     maxest = collect(Dating.upper(x) for x in values)
     return DataFrame(FirstSeq = names1, SecondSeq = names2,
-                     LowerEst = minest, MiddleEst = midest, UpperEst = maxest)
+                     LowerEstimate = minest, MidEstimate = midest, UpperEstimate = maxest)
 end
 
 function compute(args)

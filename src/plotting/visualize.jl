@@ -1,10 +1,39 @@
 
-function allowed_plot_type(arg::String)
-    return arg == "heat"
+function allowed_units(arg::String)
+    larg = lowercase(arg)
+    return larg == "inch" || larg == "mm" || larg == "cm"
+end
+
+function process_units(arg::String)
+    larg = lowercase(arg)
+    return larg == "inch" ? inch : larg == "mm" ? mm : larg == "cm" ? cm : error("Invalid units, this should not happen.")
 end
 
 function allowed_backend(arg::String)
-    return arg == "pyplot"
+    larg = lowercase(arg)
+    return larg == "svg" || larg == "svgjs" || larg == "png" || larg == "pdf" || larg == "ps" || larg == "pgf"
+end
+
+function process_backend(arg::String)
+    larg = lowercase(arg)
+    if larg == "svg"
+        return SVG
+    end
+    if larg == "svgjs"
+        return SVGJS
+    end
+    if larg == "png"
+        return PNG
+    end
+    if larg == "pdf"
+        return PDF
+    end
+    if larg == "ps"
+        return PS
+    end
+    if larg == "pgf"
+        return PGF
+    end
 end
 
 function is_windowed_data(df::DataFrame)
@@ -35,6 +64,10 @@ function clock_collect(names::Vector{Symbol}, dates::Matrix{Float64})
     return d
 end
 
+function heatplot(df::DataFrame, col::Symbol)
+    return plot(df, x = :FirstSeq, y = :SecondSeq, color = col, Geom.rectbin)
+end
+
 #using Plots; gr(); sticks(linspace(0.25π,1.5π,5), rand(5), proj=:polar, yerr=.1)
 
 function visualize(args)
@@ -43,21 +76,31 @@ function visualize(args)
                    separator = ',',
                    header = true)
     pool!(df, [:FirstSeq, :SecondSeq])
-    show(df)
-    show(is_windowed_data(df))
-    show(is_distance_data(df))
 
-    exit()
+    if is_distance_data(df)
+        # Data frame contains distances.
+        if is_windowed_data(df)
+            # Data is computed across a sliding window.
 
-    if !args["scan"]
-        if ncols == 5
-            # Data frame contains dates
-        elseif ncols == 3
-            # Data frame contains distances
         else
-            error("Can't deduce type of data file.")
+            p = heatplot(df, :Value)
+        end
+    else
+        # Data frame contains dates
+        if is_windowed_data(df)
+            # Data is computed across a sliding window.
+
+        else
+            p = heatplot(df, :MidEstimate)
         end
     end
 
+    bkend = args["backend"]
+    backend = process_backend(bkend)
 
+    unit = process_units(args["units"])
+    w = args["width"] * unit
+    h = args["height"] * unit
+
+    draw(backend("$(args["outputfile"]).$bkend", w, h), p)
 end
