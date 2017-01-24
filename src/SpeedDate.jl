@@ -70,15 +70,15 @@ function parse_command_line()
     end
 
     @add_arg_table s["plot"] begin
-        "--width", "-w"
+        "--width"
             help = "Width of the plot."
             arg_type = Float64
             default = 12.0
-        "--height", "-h"
+        "--height"
             help = "Height of the plot."
             arg_type = Float64
             default = 8.0
-        "--units", "-u"
+        "--units"
             help = """
             Units for width and height of the plot.
 
