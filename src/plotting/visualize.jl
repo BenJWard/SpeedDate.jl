@@ -87,7 +87,7 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     filtered = filter_by_ref(df, ref)
     return plot(df, x = :WindowFirst, y = :SecondSeq, color = col, Geom.rectbin,
          Guide.xlabel("Window Start (bp)"), Guide.ylabel("Sequence name"),
-         Guide.colorkey(legend), Scale.x_continuous(minvalue = 0))
+         Guide.colorkey(legend), xmin = 0)
 end
 
 #using Plots; gr(); sticks(linspace(0.25π,1.5π,5), rand(5), proj=:polar, yerr=.1)
