@@ -46,6 +46,7 @@ function is_distance_data(df::DataFrame)
     return :Value ∈ ns
 end
 
+#=
 function prepare_dictionary(names::Vector{Symbol})
     d = Dict{Symbol, Vector{Float64}}()
     for name in names
@@ -63,6 +64,7 @@ function clock_collect(names::Vector{Symbol}, dates::Matrix{Float64})
     end
     return d
 end
+=#
 
 function filter_by_ref(df::DataFrame, seqname::String)
     return @from i in df begin
@@ -77,12 +79,10 @@ function heatplot(df::DataFrame, col::Symbol)
 end
 
 function heatplot(df::DataFrame, col::Symbol, ref::String)
-    show(df)
     if ref == "default"
         ref = df[:FirstSeq][1]
     end
     filtered = filter_by_ref(df, ref)
-    show(filtered)
     plot(df, x = :WindowFirst, y = :SecondSeq, color = col, Geom.rectbin)
 end
 
