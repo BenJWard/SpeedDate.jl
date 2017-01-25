@@ -74,16 +74,20 @@ function filter_by_ref(df::DataFrame, seqname::String)
     end
 end
 
-function heatplot(df::DataFrame, col::Symbol)
-    return plot(df, x = :FirstSeq, y = :SecondSeq, color = col, Geom.rectbin)
+function heatplot(df::DataFrame, col::Symbol, legend::String)
+    return plot(df, x = :FirstSeq, y = :SecondSeq, color = col, Geom.rectbin,
+                Guide.xlabel("Sequence name"), Guide.ylabel("Sequence name"),
+                Guide.colourkey(legend))
 end
 
-function heatplot(df::DataFrame, col::Symbol, ref::String)
+function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     if ref == "default"
         ref = df[:FirstSeq][1]
     end
     filtered = filter_by_ref(df, ref)
-    plot(df, x = :WindowFirst, y = :SecondSeq, color = col, Geom.rectbin)
+    return plot(df, x = :WindowFirst, y = :SecondSeq, color = col, Geom.rectbin,
+         Guide.xlabel("Window Start (bp)"), Guide.ylabel("Sequence name"),
+         Guide.colourkey(legend))
 end
 
 #using Plots; gr(); sticks(linspace(0.25π,1.5π,5), rand(5), proj=:polar, yerr=.1)
@@ -97,19 +101,21 @@ function visualize(args)
 
     if is_distance_data(df)
         # Data frame contains distances.
+        leg = "Genetic distance"
         if is_windowed_data(df)
             # Data is computed across a sliding window.
-            p = heatplot(df, :Value, args["reference"])
+            p = heatplot(df, :Value, args["reference"], leg)
         else
-            p = heatplot(df, :Value)
+            p = heatplot(df, :Value, leg)
         end
     else
-        # Data frame contains dates
+        # Data frame contains dates.
+        leg = "Divergence time"
         if is_windowed_data(df)
             # Data is computed across a sliding window.
-            p = heatplot(df, :MidEstimate, args["reference"])
+            p = heatplot(df, :MidEstimate, args["reference"], leg)
         else
-            p = heatplot(df, :MidEstimate)
+            p = heatplot(df, :MidEstimate, leg)
         end
     end
 
