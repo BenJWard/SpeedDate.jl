@@ -157,8 +157,8 @@ of this manual that SpeedDate makes upper, middle, and lower estimates of the
 divergence time, forming a 95% confidence interval in which the true age
 is estimated to lie.
 
-An example usage is below, where the input file is called "SpeedDate_distances.csv",
-the outplot plot is given the name "myplot", the plot is written out in PNG
+An example usage is below. The input file is called "SpeedDate_distances.csv",
+the output plot is given the name "myplot", the plot is written out in PNG
 format, and the width and height of the plot are set to 50 and 45 cm.
 
 ```
