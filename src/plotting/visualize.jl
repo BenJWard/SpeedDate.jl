@@ -72,16 +72,6 @@ function filter_by_ref(df::DataFrame, seqname::String)
     end
 end
 
-function bin_windowed_data(df::DataFrame, nbins::Int)
-
-    
-
-    @from i in df begin
-        @where i.WindowFirst <
-    end
-
-end
-
 function heatplot(df::DataFrame, col::Symbol)
     return plot(df, x = :FirstSeq, y = :SecondSeq, color = col, Geom.rectbin)
 end
@@ -93,6 +83,7 @@ function heatplot(df::DataFrame, col::Symbol, ref::String)
     end
     filtered = filter_by_ref(df, ref)
     show(filtered)
+    plot(df, x = :WindowFirst, y = :SecondSeq, color = col, Geom.rectbin)
 end
 
 #using Plots; gr(); sticks(linspace(0.25π,1.5π,5), rand(5), proj=:polar, yerr=.1)
