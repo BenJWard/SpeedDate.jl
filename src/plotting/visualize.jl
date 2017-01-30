@@ -78,17 +78,17 @@ function sequence_names(df, ref)
 end
 
 function heaplot_y_order(df, col)
-    level_values = levels(df[:SecondSeq])
+    level_values = levels(df[:SeqName])
     means = Vector{Float64}(length(level_values))
     m = 1
     for sname in level_values
-        selections = sub(df, df[:SecondSeq] .== sname)
-        means[m] = mean(selections[col])
+        winvals = df[df[:SeqName] .== sname, col]
+        means[m] = mean(winvals)
         m += 1
     end
     o = sortperm(means)
     permute!(level_values, o)
-    return PooledDataArray(df[:SecondSeq], level_values)
+    return PooledDataArray(df[:SeqName], level_values)
 end
 
 function heatplot(df::DataFrame, col::Symbol, legend::String)
@@ -109,23 +109,22 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     df[:SeqName] = sequence_names(df, ref)
     println(df)
 
-    if false
+    if true
     println("Before sorting")
     println("levels")
-    println(levels(filtered[:SecondSeq]))
+    println(levels(filtered[:SeqName]))
     println("unique")
-    println(unique(filtered[:SecondSeq]))
-    println("levels")
-    println(levels(filtered[:FirstSeq]))
-    println("unique")
-    println(unique(filtered[:FirstSeq]))
+    println(unique(filtered[:SeqName]))
 
     o = heaplot_y_order(filtered, col)
+
     println("After sorting")
     println("Levels")
     println(levels(o))
     println("Unique")
     println(unique(o))
+
+    exit()
 
     end
 
