@@ -82,10 +82,6 @@ function swap_cols!(df, ref)
     end
 end
 
-function sort_seqname(df, ref)
-    return [for i in ]
-end
-
 function heaplot_y_order(df, col)
     level_values = levels(df[:SecondSeq])
     means = Vector{Float64}(length(level_values))
