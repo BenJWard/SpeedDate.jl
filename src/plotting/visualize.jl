@@ -128,6 +128,7 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     println("Unique")
     println(unique(o))
 
+    filtered[:SecondSeq] = o
 
     return plot(filtered, x = :WindowFirst, y = :SecondSeq, color = col, Geom.rectbin,
          Guide.xlabel("Window Start (bp)"), Guide.ylabel("Sequence name"),
