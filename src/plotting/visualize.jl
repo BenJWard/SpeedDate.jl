@@ -108,6 +108,7 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     println(df)
     df[:SeqName] = sequence_names(df, ref)
     println(df)
+    pool!(df, :SeqName)
 
     if true
     println("Before sorting")
