@@ -82,6 +82,10 @@ function swap_cols!(df, ref)
     end
 end
 
+function sort_seqname(df, ref)
+    return [for i in ]
+end
+
 function heaplot_y_order(df, col)
     level_values = levels(df[:SecondSeq])
     means = Vector{Float64}(length(level_values))
@@ -108,7 +112,9 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
         ref = df[:FirstSeq][1]
     end
     # Filter
+    println(df)
     df = filter_by_ref(df, ref)
+    println(df)
 
     if false
 
