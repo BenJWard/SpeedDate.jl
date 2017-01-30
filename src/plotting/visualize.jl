@@ -83,15 +83,17 @@ function swap_cols!(df, ref)
 end
 
 function heaplot_y_order(df, col)
-    snames = levels(df[:SecondSeq])
-    means = Vector{Float64}(length(snames))
+    level_values = levels(df[:SecondSeq])
+    means = Vector{Float64}(length(level_values))
     m = 1
-    for sname in snames
+    for sname in level_values
         selections = sub(df, df[:SecondSeq] .== sname)
         means[m] = mean(selections[col])
         m += 1
     end
-    return sortperm(means)
+    o = sortperm(means)
+    permute!(level_values, o)
+    return PooledDataArray(df[:SecondSeq], level_values)
 end
 
 function heatplot(df::DataFrame, col::Symbol, legend::String)
@@ -107,16 +109,16 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     end
     filtered = filter_by_ref(df, ref)
     swap_cols!(filtered, ref)
+    println(df[:SecondSeq])
     o = heaplot_y_order(filtered, col)
-    println(length(o))
-    println(levels(filtered[:SecondSeq]))
-    println(length(levels(filtered[:SecondSeq])))
+    println(df[:SecondSeq])
+    println(o)
+
 
     return plot(filtered, x = :WindowFirst, y = :SecondSeq, color = col, Geom.rectbin,
          Guide.xlabel("Window Start (bp)"), Guide.ylabel("Sequence name"),
          Guide.colorkey(legend), Coord.cartesian(xmin = 0),
-         Guide.title("$(legend) between $(ref) and other sequences (sliding window)"),
-         Scale.y_discrete(order = o))
+         Guide.title("$(legend) between $(ref) and other sequences (sliding window)"))
 end
 
 #using Plots; gr(); sticks(linspace(0.25π,1.5π,5), rand(5), proj=:polar, yerr=.1)
