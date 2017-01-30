@@ -66,38 +66,57 @@ function clock_collect(names::Vector{Symbol}, dates::Matrix{Float64})
 end
 =#
 
-function filter_by_ref(df::DataFrame, refseq::String, col::Symbol)
+function filter_by_ref(df::DataFrame, seqname::String)
     return @from i in df begin
-        @where i.FirstSeq == refseq || i.SecondSeq == refseq
-        @let firstseq = i.FirstSeq == refseq ? i.FirstSeq : i.SecondSeq
-        @let secondseq = i.SecondSeq == refseq ? i.FirstSeq : i.SecondSeq
-        @select {FirstSeq = firstseq, SecondSeq = secondseq, Value = i.col}
+        @where i.FirstSeq == seqname || i.SecondSeq == seqname
+        @select i
         @collect DataFrame
     end
 end
 
-function make_dist_means!(df::DataFrame, snames, means)
-    m = 1
-    for sname in snames
-        selections = @from i in df begin
-            @where i.SecondSeq == sname
-            @select i.Value
-            @collect
+function swap_cols!(df::DataFrame, refseq::String)
+    firstcol = df[:FirstSeq]
+    secondcol = df[:SecondSeq]
+    for i in 1:length(firstcol)
+        if firstcol[i] != refseq && secondcol[i] == refseq
+            println("Line $i in the subset!!!!")
+            secondcol[i] = firstcol[i]
+            firstcol[i] = refseq
         end
-        means[m] = mean(selections)
     end
 end
 
 function sort_heaplot_rows!(df::DataFrame, col::Symbol)
     snames = levels(df[:SecondSeq])
     means = Vector{Nullable{Float64}}(length(snames))
+    m = 1
 
     if col == :Value
-        means = make_dist_means!(df, snames, means)
+        for sname in snames
+            selections = @from i in df begin
+                @where i.SecondSeq == sname
+                @select i.Value
+                @collect
+            end
+            means[m] = mean(selections)
+            m += 1
+        end
         println(means)
     else
-        println("TODO")
+        for sname in snames
+            selections = @from i in df begin
+                @where i.SecondSeq == sname
+                @select i.MidEstimate
+                @collect
+            end
+            means[m] = mean(selections)
+            m += 1
+        end
+        println(means)
     end
+
+
+
     exit()
 end
 
@@ -112,9 +131,12 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     if ref == "default"
         ref = df[:FirstSeq][1]
     end
-    filtered = filter_by_ref(df, ref, col)
+    filtered = filter_by_ref(df, ref)
 
     println(filtered)
+    swap_cols!(df, ref)
+    println(filtered)
+
     exit()
 
     sort_heaplot_rows!(filtered, col)
