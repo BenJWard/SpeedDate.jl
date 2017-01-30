@@ -74,7 +74,7 @@ function filter_by_ref(df, ref)
 end
 
 function sequence_names(df, ref)
-    return [df[i, :Firstseq] != ref ? df[i, :FirstSeq] : df[i, :SecondSeq] for i in 1:nrow(df)]
+    return [df[i, :FirstSeq] != ref ? df[i, :FirstSeq] : df[i, :SecondSeq] for i in 1:nrow(df)]
 end
 
 function heaplot_y_order(df, col)
@@ -108,7 +108,7 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     println(df)
     seqnames = sequence_names(df, ref)
     println(seqnames)
-    
+
 
     if false
 
