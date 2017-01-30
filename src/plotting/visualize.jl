@@ -74,6 +74,26 @@ function filter_by_ref(df::DataFrame, seqname::String)
     end
 end
 
+function make_row_means(df::DataFrame)
+    snames = levels(df[:SecondSeq])
+    means = Vector{Float64}(length(snames))
+    for sname in snames
+        selections = @from i in df begin
+            @where i.SecondSeq == sname
+            @select i
+            @collect DataFrame
+        end
+    end
+
+    return means
+end
+
+function sort_heaplot_rows!(df::DataFrame)
+    means = make_row_means(df)
+
+
+end
+
 function heatplot(df::DataFrame, col::Symbol, legend::String)
     return plot(df, x = :FirstSeq, y = :SecondSeq, color = col, Geom.rectbin,
                 Guide.xlabel("Sequence name"), Guide.ylabel("Sequence name"),
