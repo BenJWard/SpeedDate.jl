@@ -70,7 +70,7 @@ function filter_by_ref(df, ref)
     a = df[:FirstSeq]
     b = df[:SecondSeq]
     idx = [(a[i] == ref) || (b[i] == ref) for i in 1:length(a)]
-    return sub(df, idx)
+    return df[idx, :]
 end
 
 function swap_cols!(df, ref)
@@ -108,7 +108,9 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
         ref = df[:FirstSeq][1]
     end
     # Filter
-    filtered = filter_by_ref(df, ref)
+    df = filter_by_ref(df, ref)
+
+    if false
 
     swap_cols!(filtered, ref)
     println("Before sorting")
@@ -130,7 +132,9 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
 
     filtered[:SecondSeq] = o
 
-    return plot(filtered, x = :WindowFirst, y = :SecondSeq, color = col, Geom.rectbin,
+    end
+
+    return plot(df, x = :WindowFirst, y = :SecondSeq, color = col, Geom.rectbin,
          Guide.xlabel("Window Start (bp)"), Guide.ylabel("Sequence name"),
          Guide.colorkey(legend), Coord.cartesian(xmin = 0),
          Guide.title("$(legend) between $(ref) and other sequences (sliding window)"))
