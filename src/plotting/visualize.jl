@@ -82,7 +82,6 @@ function make_dist_means!(df::DataFrame, snames, means)
             @select i.Value
             @collect
         end
-        println(selections)
         means[m] = mean(selections)
     end
 end
@@ -94,6 +93,7 @@ function sort_heaplot_rows!(df::DataFrame, col::Symbol)
     if col == :Value
         means = make_dist_means!(df, snames, means)
         println(means)
+        println(length(means))
     else
         println("TODO")
     end
