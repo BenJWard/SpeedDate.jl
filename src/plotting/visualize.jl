@@ -84,7 +84,6 @@ end
 
 function heaplot_y_order(df, col)
     snames = levels(df[:SecondSeq])
-    println(snames)
     means = Vector{Float64}(length(snames))
     m = 1
     for sname in snames
@@ -92,7 +91,7 @@ function heaplot_y_order(df, col)
         means[m] = mean(selections[col])
         m += 1
     end
-    return snames[sortperm(means)]
+    return sortperm(means)
 end
 
 function heatplot(df::DataFrame, col::Symbol, legend::String)
@@ -114,7 +113,8 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     return plot(df, x = :WindowFirst, y = :SecondSeq, color = col, Geom.rectbin,
          Guide.xlabel("Window Start (bp)"), Guide.ylabel("Sequence name"),
          Guide.colorkey(legend), Coord.cartesian(xmin = 0),
-         Guide.title("$(legend) between $(ref) and other sequences (sliding window)"))
+         Guide.title("$(legend) between $(ref) and other sequences (sliding window)"),
+         Scale.y_discreet(order = o))
 end
 
 #using Plots; gr(); sticks(linspace(0.25π,1.5π,5), rand(5), proj=:polar, yerr=.1)
