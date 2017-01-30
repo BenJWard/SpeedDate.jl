@@ -108,7 +108,7 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     println(df)
     seqnames = sequence_names(df, ref)
     println(seqnames)
-
+    df[:SeqName] = seqnames
 
     if false
 
