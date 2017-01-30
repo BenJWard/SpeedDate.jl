@@ -91,7 +91,7 @@ function sort_heaplot_rows!(df::DataFrame, col::Symbol)
     means = Vector{Float64}(length(snames))
 
     if col == :Value
-        means = make_dist_means!(df)
+        means = make_dist_means!(df, snames, means)
         println(means)
     else
         println("TODO")
