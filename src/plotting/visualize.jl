@@ -67,14 +67,12 @@ end
 =#
 
 function filter_by_ref(df, ref)
-    a = df[:FirstSeq]
-    b = df[:SecondSeq]
-    idx = [a[i] == ref || b[i] == ref for i in 1:length(a)]
+    idx = [df[:FirstSeq] == ref || df[:SecondSeq] == ref for i in 1:length(df[:FirstSeq])]
     return sub(df, idx)
 end
 
 function swap_cols!(df, refseq)
-    for i in 1:length(a)
+    for i in 1:length(df[:FirstSeq])
         if df[i, :FirstSeq] != refseq && df[i, :SecondSeq] == refseq
             println("Line $i in the subset!!!!")
             df[i, :SecondSeq] = df[i, :FirstSeq]
