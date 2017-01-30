@@ -82,6 +82,7 @@ function make_dist_means!(df::DataFrame, snames, means)
             @select i.Value
             @collect
         end
+        println(selections)
         means[m] = mean(selections)
     end
 end
