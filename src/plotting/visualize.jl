@@ -109,9 +109,9 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     end
     filtered = filter_by_ref(df, ref)
     swap_cols!(filtered, ref)
-    println(df[:SecondSeq])
+    println(filtered[:SecondSeq])
     o = heaplot_y_order(filtered, col)
-    println(df[:SecondSeq])
+    println(filtered[:SecondSeq])
     println(o)
 
 
