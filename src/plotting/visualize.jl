@@ -73,17 +73,18 @@ function filter_by_ref(df, ref)
     return sub(df, idx)
 end
 
-function swap_cols!(df, refseq)
+function swap_cols!(df, ref)
     for i in 1:length(df[:FirstSeq])
-        if df[i, :FirstSeq] != refseq && df[i, :SecondSeq] == refseq
+        if df[i, :FirstSeq] != ref && df[i, :SecondSeq] == ref
             df[i, :SecondSeq] = df[i, :FirstSeq]
-            df[i, :FirstSeq] = refseq
+            df[i, :FirstSeq] = ref
         end
     end
 end
 
-function sort_heaplot_rows!(df, col)
+function heaplot_y_order(df, col)
     snames = levels(df[:SecondSeq])
+    println(snames)
     means = Vector{Nullable{Float64}}(length(snames))
     m = 1
     for sname in snames
@@ -91,7 +92,7 @@ function sort_heaplot_rows!(df, col)
         means[m] = mean(selections[col])
         m += 1
     end
-    println(DataFrame(Seq = snames, Mean = means))
+    return snames[sortperm(means)]
 end
 
 function heatplot(df::DataFrame, col::Symbol, legend::String)
@@ -106,13 +107,9 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
         ref = df[:FirstSeq][1]
     end
     filtered = filter_by_ref(df, ref)
-    println(filtered)
     swap_cols!(filtered, ref)
-    println(filtered)
-
-    #exit()
-
-    sort_heaplot_rows!(filtered, col)
+    o = heaplot_y_order(filtered, col)
+    println(o)
 
     return plot(df, x = :WindowFirst, y = :SecondSeq, color = col, Geom.rectbin,
          Guide.xlabel("Window Start (bp)"), Guide.ylabel("Sequence name"),
