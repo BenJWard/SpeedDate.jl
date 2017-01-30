@@ -89,7 +89,7 @@ end
 
 function sort_heaplot_rows!(df::DataFrame, col::Symbol)
     snames = levels(df[:SecondSeq])
-    means = Vector{Float64}(length(snames))
+    means = Vector{Nullable{Float64}}(length(snames))
 
     if col == :Value
         means = make_dist_means!(df, snames, means)
