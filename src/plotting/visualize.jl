@@ -76,12 +76,10 @@ end
 function swap_cols!(df, refseq)
     for i in 1:length(df[:FirstSeq])
         if df[i, :FirstSeq] != refseq && df[i, :SecondSeq] == refseq
-            println("Line $i in the subset!!!!")
             df[i, :SecondSeq] = df[i, :FirstSeq]
             df[i, :FirstSeq] = refseq
         end
     end
-    println(df)
 end
 
 function sort_heaplot_rows!(df::DataFrame, col::Symbol)
@@ -130,7 +128,6 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
         ref = df[:FirstSeq][1]
     end
     filtered = filter_by_ref(df, ref)
-
     println(filtered)
     swap_cols!(filtered, ref)
     println(filtered)
