@@ -74,24 +74,29 @@ function filter_by_ref(df::DataFrame, seqname::String)
     end
 end
 
-function make_row_means(df::DataFrame)
-    snames = levels(df[:SecondSeq])
-    means = Vector{Float64}(length(snames))
+function make_dist_means!(df::DataFrame, snames, means)
+    m = 1
     for sname in snames
         selections = @from i in df begin
             @where i.SecondSeq == sname
-            @select i
-            @collect DataFrame
+            @select i.Value
+            @collect
         end
+        means[m] = mean(selections)
     end
-
-    return means
 end
 
-function sort_heaplot_rows!(df::DataFrame)
-    means = make_row_means(df)
+function sort_heaplot_rows!(df::DataFrame, col::Symbol)
+    snames = levels(df[:SecondSeq])
+    means = Vector{Float64}(length(snames))
 
-
+    if col == :Value
+        means = make_dist_means!(df)
+        println(means)
+    else
+        println("TODO")
+    end
+    exit()
 end
 
 function heatplot(df::DataFrame, col::Symbol, legend::String)
@@ -106,6 +111,9 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
         ref = df[:FirstSeq][1]
     end
     filtered = filter_by_ref(df, ref)
+
+    sort_heaplot_rows!(filtered, col)
+
     return plot(df, x = :WindowFirst, y = :SecondSeq, color = col, Geom.rectbin,
          Guide.xlabel("Window Start (bp)"), Guide.ylabel("Sequence name"),
          Guide.colorkey(legend), Coord.cartesian(xmin = 0),
