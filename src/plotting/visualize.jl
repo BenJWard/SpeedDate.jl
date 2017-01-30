@@ -66,10 +66,12 @@ function clock_collect(names::Vector{Symbol}, dates::Matrix{Float64})
 end
 =#
 
-function filter_by_ref(df::DataFrame, seqname::String)
+function filter_by_ref(df::DataFrame, refseq::String, col::Symbol)
     return @from i in df begin
-        @where i.FirstSeq == seqname || i.SecondSeq == seqname
-        @select i
+        @where i.FirstSeq == refseq || i.SecondSeq == refseq
+        @let firstseq = i.FirstSeq == refseq ? i.FirstSeq : i.SecondSeq
+        @let secondseq = i.SecondSeq == refseq ? i.FirstSeq : i.SecondSeq
+        @select {FirstSeq = firstseq, SecondSeq = secondseq, Value = i.col}
         @collect DataFrame
     end
 end
@@ -93,7 +95,6 @@ function sort_heaplot_rows!(df::DataFrame, col::Symbol)
     if col == :Value
         means = make_dist_means!(df, snames, means)
         println(means)
-        println(length(means))
     else
         println("TODO")
     end
@@ -111,7 +112,10 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     if ref == "default"
         ref = df[:FirstSeq][1]
     end
-    filtered = filter_by_ref(df, ref)
+    filtered = filter_by_ref(df, ref, col)
+
+    println(filtered)
+    exit()
 
     sort_heaplot_rows!(filtered, col)
 
