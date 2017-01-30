@@ -67,11 +67,7 @@ end
 =#
 
 function filter_by_ref(df::DataFrame, seqname::String)
-    return @from i in df begin
-        @where i.FirstSeq == seqname || i.SecondSeq == seqname
-        @select i
-        @collect DataFrame
-    end
+    return sub(df, df[:FirstSeq] .== seqname | df[:SecondSeq] .== seqname)
 end
 
 function swap_cols!(df::DataFrame, refseq::String)
