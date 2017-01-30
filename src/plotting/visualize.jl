@@ -91,7 +91,7 @@ function sort_heaplot_rows!(df, col)
         means[m] = mean(selections[col])
         m += 1
     end
-    println(DataFrame(Seq = snames), Mean = means)
+    println(DataFrame(Seq = snames, Mean = means))
 end
 
 function heatplot(df::DataFrame, col::Symbol, legend::String)
