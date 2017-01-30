@@ -102,17 +102,14 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     if ref == "default"
         ref = df[:FirstSeq][1]
     end
-    # Filter
+
     println(df)
     df = filter_by_ref(df, ref)
     println(df)
-    seqnames = sequence_names(df, ref)
-    println(seqnames)
-    df[:SeqName] = seqnames
+    df[:SeqName] = sequence_names(df, ref)
+    println(df)
 
     if false
-
-    swap_cols!(filtered, ref)
     println("Before sorting")
     println("levels")
     println(levels(filtered[:SecondSeq]))
@@ -129,8 +126,6 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     println(levels(o))
     println("Unique")
     println(unique(o))
-
-    filtered[:SecondSeq] = o
 
     end
 
