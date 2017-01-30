@@ -77,7 +77,7 @@ function sequence_names(df, ref)
     return [df[i, :FirstSeq] != ref ? df[i, :FirstSeq] : df[i, :SecondSeq] for i in 1:nrow(df)]
 end
 
-function heaplot_y_order(df, col)
+function heatplot_y_order(df, col)
     level_values = levels(df[:SeqName])
     means = Vector{Float64}(length(level_values))
     m = 1
@@ -117,7 +117,7 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     println("unique")
     println(unique(df[:SeqName]))
 
-    o = heaplot_y_order(df, col)
+    df[:SeqName] = heatplot_y_order(df, col)
 
     println("After sorting")
     println("Levels")
@@ -125,7 +125,6 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     println("Unique")
     println(unique(o))
 
-    exit()
 
     end
 
