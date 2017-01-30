@@ -83,7 +83,7 @@ function heatplot_y_order(df, col)
     m = 1
     for sname in level_values
         winvals = df[df[:SeqName] .== sname, col]
-        means[m] = maximum(winvals)
+        means[m] = sum(winvals)
         m += 1
     end
     o = sortperm(means)
