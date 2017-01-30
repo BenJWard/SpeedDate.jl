@@ -111,21 +111,9 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     pool!(df, :SeqName)
 
     if true
-    println("Before sorting")
-    println("levels")
-    println(levels(df[:SeqName]))
-    println("unique")
-    println(unique(df[:SeqName]))
-
     df[:SeqName] = heatplot_y_order(df, col)
-
     println("After sorting")
-    println("Levels")
-    println(levels(o))
-    println("Unique")
-    println(unique(o))
-
-
+    println(df)
     end
 
     return plot(df, x = :WindowFirst, y = :SeqName, color = col, Geom.rectbin,
