@@ -67,7 +67,9 @@ end
 =#
 
 function filter_by_ref(df, ref)
-    idx = [df[:FirstSeq] == ref || df[:SecondSeq] == ref for i in 1:length(df[:FirstSeq])]
+    a = df[:FirstSeq]
+    b = df[:SecondSeq]
+    idx = [(a[i] == ref) || (b[i] == ref) for i in 1:length(a)]
     return sub(df, idx)
 end
 
