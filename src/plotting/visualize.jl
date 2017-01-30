@@ -131,7 +131,7 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     filtered = filter_by_ref(df, ref)
 
     println(filtered)
-    swap_cols!(df, ref)
+    swap_cols!(filtered, ref)
     println(filtered)
 
     #exit()
