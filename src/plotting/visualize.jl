@@ -83,6 +83,8 @@ function swap_cols!(df, refseq)
             a[i] = refseq
         end
     end
+    println(a)
+    println(b)
     println(df)
 end
 
