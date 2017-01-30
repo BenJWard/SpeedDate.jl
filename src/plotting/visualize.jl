@@ -89,7 +89,7 @@ function heaplot_y_order(df, col)
     m = 1
     for sname in snames
         selections = sub(df, df[:SecondSeq] .== sname)
-        means[m] = get(mean(selections[col]))
+        means[m] = mean(selections[col])
         m += 1
     end
     return snames[sortperm(means)]
