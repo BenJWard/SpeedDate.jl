@@ -84,6 +84,7 @@ function swap_cols!(df::DataFrame, refseq::String)
             firstcol[i] = refseq
         end
     end
+    println(df)
 end
 
 function sort_heaplot_rows!(df::DataFrame, col::Symbol)
@@ -137,9 +138,9 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     swap_cols!(df, ref)
     println(filtered)
 
-    exit()
+    #exit()
 
-    sort_heaplot_rows!(filtered, col)
+    #sort_heaplot_rows!(filtered, col)
 
     return plot(df, x = :WindowFirst, y = :SecondSeq, color = col, Geom.rectbin,
          Guide.xlabel("Window Start (bp)"), Guide.ylabel("Sequence name"),
