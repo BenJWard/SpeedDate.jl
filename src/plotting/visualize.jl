@@ -110,13 +110,16 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     end
     # Filter
     filtered = filter_by_ref(df, ref)
-    println(levels(filtered[:FirstSeq]))
-    println(levels(filtered[:SecondSeq]))
+
     swap_cols!(filtered, ref)
     println(levels(filtered[:SecondSeq]))
+    println(unique(filtered[:SecondSeq]))
+    println(levels(filtered[:FirstSeq]))
+    println(unique(filtered[:FirstSeq]))
+
+
     o = heaplot_y_order(filtered, col)
-    println(levels(filtered[:SecondSeq]))
-    println(levels(o))
+    
 
 
     return plot(filtered, x = :WindowFirst, y = :SecondSeq, color = col, Geom.rectbin,
