@@ -87,8 +87,7 @@ function heatplot_y_order(df, col)
         m += 1
     end
     o = sortperm(means)
-    permute!(level_values, o)
-    return PooledDataArray(df[:SeqName], level_values)
+    return o
 end
 
 function heatplot(df::DataFrame, col::Symbol, legend::String)
@@ -111,15 +110,16 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     pool!(df, :SeqName)
 
     if true
-    df[:SeqName] = heatplot_y_order(df, col)
+    o = heatplot_y_order(df, col)
     println("After sorting")
-    println(df)
+    println(o)
     end
 
     return plot(df, x = :WindowFirst, y = :SeqName, color = col, Geom.rectbin,
          Guide.xlabel("Window Start (bp)"), Guide.ylabel("Sequence name"),
          Guide.colorkey(legend), Coord.cartesian(xmin = 0),
-         Guide.title("$(legend) between $(ref) and other sequences (sliding window)"))
+         Guide.title("$(legend) between $(ref) and other sequences (sliding window)"),
+         Scale.y_discrete(order = o)
 end
 
 #using Plots; gr(); sticks(linspace(0.25π,1.5π,5), rand(5), proj=:polar, yerr=.1)
