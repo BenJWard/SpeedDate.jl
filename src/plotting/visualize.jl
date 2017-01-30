@@ -84,7 +84,6 @@ end
 
 function heaplot_y_order(df, col)
     level_values = levels(df[:SecondSeq])
-    println(level_values)
     means = Vector{Float64}(length(level_values))
     m = 1
     for sname in level_values
@@ -112,14 +111,22 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     filtered = filter_by_ref(df, ref)
 
     swap_cols!(filtered, ref)
+    println("Before sorting")
+    println("levels")
     println(levels(filtered[:SecondSeq]))
+    println("unique")
     println(unique(filtered[:SecondSeq]))
+    println("levels")
     println(levels(filtered[:FirstSeq]))
+    println("unique")
     println(unique(filtered[:FirstSeq]))
 
-
     o = heaplot_y_order(filtered, col)
-    
+    println("After sorting")
+    println("Levels")
+    println(levels(o))
+    println("Unique")
+    println(unique(o))
 
 
     return plot(filtered, x = :WindowFirst, y = :SecondSeq, color = col, Geom.rectbin,
