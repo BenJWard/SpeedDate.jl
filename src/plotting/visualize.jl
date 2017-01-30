@@ -66,8 +66,11 @@ function clock_collect(names::Vector{Symbol}, dates::Matrix{Float64})
 end
 =#
 
-function filter_by_ref(df::DataFrame, seqname::String)
-    return sub(df, df[:FirstSeq] .== seqname | df[:SecondSeq] .== seqname)
+function filter_by_ref(df::DataFrame, ref::String)
+    a = df[:FirstSeq]
+    b = df[:SecondSeq]
+    idx = [a[i] == ref || b[i] == ref for i in 1:length(a)]
+    return sub(df, idx)
 end
 
 function swap_cols!(df::DataFrame, refseq::String)
