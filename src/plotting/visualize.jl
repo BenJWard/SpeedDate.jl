@@ -73,13 +73,8 @@ function filter_by_ref(df, ref)
     return df[idx, :]
 end
 
-function swap_cols!(df, ref)
-    for i in 1:length(df[:FirstSeq])
-        if df[i, :FirstSeq] != ref && df[i, :SecondSeq] == ref
-            df[i, :SecondSeq] = df[i, :FirstSeq]
-            df[i, :FirstSeq] = ref
-        end
-    end
+function sequence_names(df, ref)
+    return [df[i, :Firstseq] != ref ? df[i, :FirstSeq] : df[i, :SecondSeq] for i in 1:nrow(df)]
 end
 
 function heaplot_y_order(df, col)
@@ -111,6 +106,9 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     println(df)
     df = filter_by_ref(df, ref)
     println(df)
+    seqnames = sequence_names(df, ref)
+    println(seqnames)
+    
 
     if false
 
