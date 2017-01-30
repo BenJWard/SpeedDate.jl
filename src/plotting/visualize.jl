@@ -112,11 +112,11 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     if true
     println("Before sorting")
     println("levels")
-    println(levels(filtered[:SeqName]))
+    println(levels(df[:SeqName]))
     println("unique")
-    println(unique(filtered[:SeqName]))
+    println(unique(df[:SeqName]))
 
-    o = heaplot_y_order(filtered, col)
+    o = heaplot_y_order(df, col)
 
     println("After sorting")
     println("Levels")
