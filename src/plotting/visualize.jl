@@ -82,7 +82,7 @@ function swap_cols!(df, refseq)
     end
 end
 
-function sort_heaplot_rows!(df::DataFrame, col::Symbol)
+function sort_heaplot_rows!(df, col)
     snames = levels(df[:SecondSeq])
     means = Vector{Nullable{Float64}}(length(snames))
     m = 1
@@ -92,7 +92,6 @@ function sort_heaplot_rows!(df::DataFrame, col::Symbol)
         m += 1
     end
     println(means)
-    exit()
 end
 
 function heatplot(df::DataFrame, col::Symbol, legend::String)
