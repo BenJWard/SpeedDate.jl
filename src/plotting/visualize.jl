@@ -108,7 +108,9 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     filtered = filter_by_ref(df, ref)
     swap_cols!(filtered, ref)
     o = heaplot_y_order(filtered, col)
-    println(o)
+    println(length(o))
+    println(levels(filtered[:SecondSeq]))
+    println(length(levels(filtered[:SecondSeq])))
 
     return plot(filtered, x = :WindowFirst, y = :SecondSeq, color = col, Geom.rectbin,
          Guide.xlabel("Window Start (bp)"), Guide.ylabel("Sequence name"),
