@@ -86,33 +86,12 @@ function sort_heaplot_rows!(df::DataFrame, col::Symbol)
     snames = levels(df[:SecondSeq])
     means = Vector{Nullable{Float64}}(length(snames))
     m = 1
-
-    if col == :Value
-        for sname in snames
-            selections = @from i in df begin
-                @where i.SecondSeq == sname
-                @select i.Value
-                @collect
-            end
-            means[m] = mean(selections)
-            m += 1
-        end
-        println(means)
-    else
-        for sname in snames
-            selections = @from i in df begin
-                @where i.SecondSeq == sname
-                @select i.MidEstimate
-                @collect
-            end
-            means[m] = mean(selections)
-            m += 1
-        end
-        println(means)
+    for sname in snames
+        selections = sub(df, df[:SecondSeq] .== sname)
+        means[m] = mean(selections[col])
+        m += 1
     end
-
-
-
+    println(means)
     exit()
 end
 
@@ -134,7 +113,7 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
 
     #exit()
 
-    #sort_heaplot_rows!(filtered, col)
+    sort_heaplot_rows!(filtered, col)
 
     return plot(df, x = :WindowFirst, y = :SecondSeq, color = col, Geom.rectbin,
          Guide.xlabel("Window Start (bp)"), Guide.ylabel("Sequence name"),
