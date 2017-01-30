@@ -66,21 +66,21 @@ function clock_collect(names::Vector{Symbol}, dates::Matrix{Float64})
 end
 =#
 
-function filter_by_ref(df::DataFrame, ref::String)
+function filter_by_ref(df, ref)
     a = df[:FirstSeq]
     b = df[:SecondSeq]
     idx = [a[i] == ref || b[i] == ref for i in 1:length(a)]
     return sub(df, idx)
 end
 
-function swap_cols!(df::DataFrame, refseq::String)
-    firstcol = df[:FirstSeq]
-    secondcol = df[:SecondSeq]
-    for i in 1:length(firstcol)
-        if firstcol[i] != refseq && secondcol[i] == refseq
+function swap_cols!(df, refseq)
+    a = df[:FirstSeq]
+    b = df[:SecondSeq]
+    for i in 1:length(a)
+        if a[i] != refseq && b[i] == refseq
             println("Line $i in the subset!!!!")
-            secondcol[i] = firstcol[i]
-            firstcol[i] = refseq
+            b[i] = a[i]
+            a[i] = refseq
         end
     end
     println(df)
