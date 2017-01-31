@@ -107,7 +107,8 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     df[:SeqName] = sequence_names(df, ref)
     pool!(df, [:RefName, :SeqName])
 
-    df[df[col] .== NaN, col] = NA
+    idx = [isnan(i) for i in df[col]]
+    df[idx, col] = NA
 
     o = heatplot_y_order(df, col)
 
