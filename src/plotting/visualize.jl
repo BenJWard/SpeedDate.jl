@@ -103,8 +103,10 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     end
 
     df = filter_by_ref(df, ref)
+    df[:RefName] = fill!(Vector{String}(nrow(df)), ref)
     df[:SeqName] = sequence_names(df, ref)
-    pool!(df, :SeqName)
+    pool!(df, :RefName, :SeqName)
+
     o = heatplot_y_order(df, col)
 
     return (plot(df, x = :WindowFirst, y = :SeqName, color = col, Geom.rectbin,
