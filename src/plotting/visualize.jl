@@ -91,10 +91,10 @@ function heatplot_y_order(df, col)
 end
 
 function heatplot(df::DataFrame, col::Symbol, legend::String)
-    return plot(df, x = :FirstSeq, y = :SecondSeq, color = col, Geom.rectbin,
+    return (plot(df, x = :FirstSeq, y = :SecondSeq, color = col, Geom.rectbin,
                 Guide.xlabel("Sequence name"), Guide.ylabel("Sequence name"),
                 Guide.colorkey(legend),
-                Guide.title("$(legend) between sequences"))
+                Guide.title("$(legend) between sequences")), df)
 end
 
 function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
@@ -107,11 +107,11 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     pool!(df, :SeqName)
     o = heatplot_y_order(df, col)
 
-    return plot(df, x = :WindowFirst, y = :SeqName, color = col, Geom.rectbin,
+    return (plot(df, x = :WindowFirst, y = :SeqName, color = col, Geom.rectbin,
          Guide.xlabel("Window Start (bp)"), Guide.ylabel("Sequence name"),
          Guide.colorkey(legend), Coord.cartesian(xmin = 0),
          Guide.title("$(legend) between $(ref) and other sequences (sliding window)"),
-         Scale.y_discrete(order = o))
+         Scale.y_discrete(order = o)), df)
 end
 
 #using Plots; gr(); sticks(linspace(0.25π,1.5π,5), rand(5), proj=:polar, yerr=.1)
@@ -128,18 +128,18 @@ function visualize(args)
         leg = "Genetic distance"
         if is_windowed_data(df)
             # Data is computed across a sliding window.
-            p = heatplot(df, :Value, args["reference"], leg)
+            p, d = heatplot(df, :Value, args["reference"], leg)
         else
-            p = heatplot(df, :Value, leg)
+            p, d = heatplot(df, :Value, leg)
         end
     else
         # Data frame contains dates.
         leg = "Divergence time"
         if is_windowed_data(df)
             # Data is computed across a sliding window.
-            p = heatplot(df, :MidEstimate, args["reference"], leg)
+            p, d = heatplot(df, :MidEstimate, args["reference"], leg)
         else
-            p = heatplot(df, :MidEstimate, leg)
+            p, d = heatplot(df, :MidEstimate, leg)
         end
     end
 
@@ -151,7 +151,7 @@ function visualize(args)
     h = args["height"] * unit
 
     if args["table"]
-        writetable("$(args["outputfile"])_plottable.csv", p.data)
+        writetable("$(args["outputfile"])_plottable.csv", d)
     end
 
     draw(backend("$(args["outputfile"]).$bkend", w, h), p)
