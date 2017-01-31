@@ -101,6 +101,9 @@ function parse_command_line()
             """
             arg_type = String
             default = "default"
+        "--table"
+            help = "Save the table used for plotting to file."
+            action = :store_true
         "inputfile"
             help = "The file name of the input data."
             arg_type = String

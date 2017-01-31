@@ -102,18 +102,10 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
         ref = df[:FirstSeq][1]
     end
 
-    println(df)
     df = filter_by_ref(df, ref)
-    println(df)
     df[:SeqName] = sequence_names(df, ref)
-    println(df)
     pool!(df, :SeqName)
-
-    if true
     o = heatplot_y_order(df, col)
-    println("After sorting")
-    println(o)
-    end
 
     return plot(df, x = :WindowFirst, y = :SeqName, color = col, Geom.rectbin,
          Guide.xlabel("Window Start (bp)"), Guide.ylabel("Sequence name"),
@@ -157,6 +149,10 @@ function visualize(args)
     unit = process_units(args["units"])
     w = args["width"] * unit
     h = args["height"] * unit
+
+    if args["table"]
+        writetable("$(args["outputfile"])_plottable.csv", p.data)
+    end
 
     draw(backend("$(args["outputfile"]).$bkend", w, h), p)
 end
