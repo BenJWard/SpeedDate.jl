@@ -111,7 +111,8 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     df[idx, col] = NA
 
     println("Any NaN's")
-    println(any([isnan(i) for i in df[col]]))
+    println(unique(df[col]))
+    println(sum(df[col], skipna = true))
 
     o = heatplot_y_order(df, col)
 
