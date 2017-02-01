@@ -110,6 +110,9 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     idx = [isnan(i) for i in df[col]]
     df[idx, col] = NA
 
+    println("Any NaN's")
+    println(any([isnan(i) for i in df[col]]))
+
     o = heatplot_y_order(df, col)
 
     return (plot(df, x = :WindowFirst, y = :SeqName, color = col, Geom.rectbin,
