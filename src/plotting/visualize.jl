@@ -114,7 +114,7 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
 
     complete_df = df[complete_cases(df), :]
 
-    o = heatplot_y_order(df, col)
+    o = heatplot_y_order(complete_df, col)
 
     return (plot(complete_df, x = :WindowFirst, y = :SeqName, color = col, Geom.rectbin,
          Guide.xlabel("Window Start (bp)"), Guide.ylabel("Sequence name"),
