@@ -115,8 +115,8 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     return (plot(df, x = :WindowFirst, y = :SeqName, color = col, Geom.rectbin,
          Guide.xlabel("Window Start (bp)"), Guide.ylabel("Sequence name"),
          Guide.colorkey(legend), Coord.cartesian(xmin = 0),
-         Guide.title("$(legend) between $(ref) and other sequences (sliding window)"),
-         Scale.y_discrete(order = o)), df)
+         Guide.title("$(legend) between $(ref) and other sequences (sliding window)"))#,
+         #Scale.y_discrete(order = o)), df)
 end
 
 #using Plots; gr(); sticks(linspace(0.25π,1.5π,5), rand(5), proj=:polar, yerr=.1)
