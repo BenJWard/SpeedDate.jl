@@ -80,10 +80,12 @@ end
 function heatplot_y_order(df, col)
     level_values = levels(df[:SeqName])
     means = Vector{Float64}(length(level_values))
+    vals = Vector{Float64}(df[col])
     m = 1
     for sname in level_values
-        winvals = df[df[:SeqName] .== sname, col]
-        means[m] = sum(winvals, skipna = true)
+        idx = df[:SeqName] .== sname
+        subvals = vals[idx]
+        means[m] = sum(subvals)
         m += 1
     end
     o = sortperm(means)
@@ -112,9 +114,7 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
 
     complete_df = df[complete_cases(df), :]
 
-    println(complete_df)
-
-    #o = heatplot_y_order(df, col)
+    o = heatplot_y_order(df, col)
 
     return (plot(complete_df, x = :WindowFirst, y = :SeqName, color = col, Geom.rectbin,
          Guide.xlabel("Window Start (bp)"), Guide.ylabel("Sequence name"),
