@@ -3,7 +3,7 @@ __precompile__()
 module SpeedDate
 
 using Bio: Seq, Var, Phylo.Dating, Indexers
-using ArgParse, DataFrames, Gadfly
+using ArgParse, DataFrames, Gadfly, DataArrays
 
 include("dating/dating.jl")
 include("plotting/visualize.jl")

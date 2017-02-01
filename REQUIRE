@@ -1,5 +1,6 @@
 julia 0.5
 DataFrames
+DataArrays
 Gadfly
 Bio 0.4.3
 ArgParse 0.4
