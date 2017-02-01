@@ -110,6 +110,8 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     idx = [isnan(i) for i in df[col]]
     df[idx, col] = NA
 
+    println(typeof(df[col]))
+
     println("Any NaN's")
     println(unique(df[col]))
     println(sum(df[col], skipna = true))
