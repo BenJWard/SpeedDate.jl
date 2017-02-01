@@ -110,13 +110,13 @@ function heatplot(df::DataFrame, col::Symbol, ref::String, legend::String)
     idx = [isnan(i) for i in df[col]]
     df[idx, col] = NA
 
-    complete_df = complete_cases(df)
+    complete_df = df[complete_cases(df), :]
 
     println(complete_df)
 
     #o = heatplot_y_order(df, col)
 
-    return (plot(df, x = :WindowFirst, y = :SeqName, color = col, Geom.rectbin,
+    return (plot(complete_df, x = :WindowFirst, y = :SeqName, color = col, Geom.rectbin,
          Guide.xlabel("Window Start (bp)"), Guide.ylabel("Sequence name"),
          Guide.colorkey(legend), Coord.cartesian(xmin = 0),
          Guide.title("$(legend) between $(ref) and other sequences (sliding window)")), df)#,
