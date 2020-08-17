@@ -47,40 +47,17 @@ a sliding window over entire genomes, making it more useful for exploratory and
 broad stroke assesments of evolutionary dynamics across a genome. It is then 
 complimentary with other more intensive methods used in the field.
 
-The `SpeedDate.jl` package implements the very same algorithm in Julia, making it
-faster than the original implementation in R. It is also
-built on top of packages in the `BioJulia` framework, including `BioSequences.jl`.
+The `SpeedDate.jl` package implements the very same algorithm for general use,
+in Julia programming language, making it faster than the original implementation
+in the `HybridCheck` R package. It is also built on top of packages in the
+`BioJulia` framework, including the `BioSequences.jl` package.
 The divergence time is estimated using the number of mutations that have occurred
 between two aligned sequences. The calculation uses a strict molecular clock
 which assumes a constant substitution rate, both through time and across taxa, and
 models the mutation accumulation process as a Bernoulli trial. More details about
 the model are in the SpeedDate.jl online manual.
 
-`Gala` was designed to be used by both astronomical researchers and by
-students in courses on gravitational dynamics or astronomy. It has already been
-used in a number of scientific publications [@Pearson:2017] and has also been
-used in graduate courses on Galactic dynamics to, e.g., provide interactive
-visualizations of textbook material [@Binney:2008]. The combination of speed,
-design, and support for Astropy functionality in `Gala` will enable exciting
-scientific explorations of forthcoming data releases from the *Gaia* mission
-[@gaia] by students and experts alike.
-
-# Mathematics
-
-Single dollars ($) are required for inline mathematics e.g. $f(x) = e^{\pi/x}$
-
-Double dollars make self-standing equations:
-
-$$\Theta(x) = \left\{\begin{array}{l}
-0\textrm{ if } x < 0\cr
-1\textrm{ else}
-\end{array}\right.$$
-
-You can also use plain \LaTeX for equations
-\begin{equation}\label{eq:fourier}
-\hat f(\omega) = \int_{-\infty}^{\infty} f(x) e^{i\omega x} dx
-\end{equation}
-and refer to \autoref{eq:fourier} from text.
+`SpeedDate` has been used by ...
 
 # Citations
 
