@@ -10,7 +10,7 @@ tags:
   - divergence time
 authors:
   - name: Ben J. Ward
-    orcid: 0000-0003-0872-7098
+    orcid: 0000-0001-6337-5238
     affiliation: 1
   - name: Cock van Oosterhout
     affiliation: 2
@@ -37,12 +37,13 @@ involve simulation and modelling more complex evolutionary histories.
 # Statement of need 
 
 `SpeedDate` is a method of estimating a divergence time between two DNA sequences.
-It was first implemented in the R package `HybridCheck`. It was specifically used
-to date regions of introgression between homologous contigs of assembled genomes.
-Because it was designed for a study involving whole genome sequencing data of multiple
-individuals from a population. As such it was designed to give rapid reasonable
-estimates, rather than precise estimates that methods that are far more computationally
-intensive. The SpeedDate method then is simple and quick to run for example on
+It was first implemented in the R package `HybridCheck` [@Ward2016].
+It was specifically used to date regions of introgression between homologous
+contigs of assembled genomes. Because it was designed for a study involving whole
+genome sequencing data of multiple individuals from a population.
+As such it was designed to give rapid reasonable estimates, rather than precise
+estimates that methods that are far more computationally intensive.
+The SpeedDate method then is simple and quick to run for example on
 a sliding window over entire genomes, making it more useful for exploratory and
 broad stroke assesments of evolutionary dynamics across a genome. It is then 
 complimentary with other more intensive methods used in the field.
