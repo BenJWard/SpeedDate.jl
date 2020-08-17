@@ -50,7 +50,7 @@ broad stroke assesments of evolutionary dynamics across a genome. It is then
 complimentary with other more intensive methods used in the field.
 
 The `SpeedDate.jl` package implements the very same algorithm for general use,
-in Julia programming language, making it faster than the original implementation
+in the Julia programming language, making it faster than the original implementation
 in the `HybridCheck` R package. It is also built on top of packages in the
 `BioJulia` framework, including the `BioSequences.jl` package.
 The divergence time is estimated using the number of mutations that have occurred
