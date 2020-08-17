@@ -40,9 +40,10 @@ involve simulation and modelling more complex evolutionary histories.
 It was first implemented in the R package `HybridCheck` [@Ward2016].
 It was specifically used to date regions of introgression between homologous
 contigs of assembled genomes. Because it was designed for a study involving whole
-genome sequencing data of multiple individuals from a population.
+genome sequencing data of multiple individuals from plant pathogen populations
+[@McMullan2015].
 As such it was designed to give rapid reasonable estimates, rather than precise
-estimates that methods that are far more computationally intensive.
+estimates that methods that are far more computationally intensive [@Bouckaert2014].
 The SpeedDate method then is simple and quick to run for example on
 a sliding window over entire genomes, making it more useful for exploratory and
 broad stroke assesments of evolutionary dynamics across a genome. It is then 
@@ -56,39 +57,19 @@ The divergence time is estimated using the number of mutations that have occurre
 between two aligned sequences. The calculation uses a strict molecular clock
 which assumes a constant substitution rate, both through time and across taxa, and
 models the mutation accumulation process as a Bernoulli trial. More details about
-the model are in the SpeedDate.jl online manual.
+the model are in the `SpeedDate.jl` online manual.
 
-`SpeedDate` has been used by ...
-
-# Citations
-
-Citations to entries in paper.bib should be in
-[rMarkdown](http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html)
-format.
-
-If you want to cite a software repository URL (e.g. something on GitHub without a preferred
-citation) then you can do it with the example BibTeX entry below for @fidgit.
-
-For a quick reference, the following citation commands can be used:
-- `@author:2001`  ->  "Author et al. (2001)"
-- `[@author:2001]` -> "(Author et al., 2001)"
-- `[@author1:2001; @author2:2001]` -> "(Author1 et al., 2001; Author2 et al., 2002)"
-
-# Figures
-
-Figures can be included like this:
-![Caption for example figure.\label{fig:example}](figure.png)
-and referenced from text using \autoref{fig:example}.
-
-Fenced code blocks are rendered with syntax highlighting:
-```python
-for n in range(10):
-    yield f(n)
-```	
+The `SpeedDate` algorithm has been used to date stretches of genome sequence
+affected by historical introgression in human pathogens [@Nader2019], and plant
+pathogens [@McMullan2015]. The authors (of `SpeedDate.jl` and `HybridCheck`)
+saw that the algorithm should be provided in `SpeedDate.jl` as its own standalone
+tool, as its utility extends beyond how it is used in `HybridCheck` to date genome
+sequences affected by recombination. For example, HybridCheck was used to compute
+SpeedDate estimates for the SpB-like regions of the yeast genome [@Eberlein2019].
+To do this the users would have had to "trick" `HybridCheck` to see these regions
+as zones affected by recombination. `SpeedDate.jl` provides the algorithm in a
+simple to use and standalone function, for this and any other use cases.
 
 # Acknowledgements
-
-We acknowledge contributions from Brigitta Sipocz, Syrtis Major, and Semyeong
-Oh, and support from Kathryn Johnston during the genesis of this project.
 
 # References
